@@ -1,0 +1,68 @@
+docker run -it -d --rm --name linux1 ubuntu /bin/bash
+docker run -it -d --rm --name linux2 ubuntu /bin/bash
+
+--rm => it will delete the container after stops
+--name => the name of container
+
+-d ==> it will go back to OS command line
+
+=====================================================
+docker --rm -v ${PWD}:/myvol ubuntu /bin/bash -c "ls -lha > /myvol/myfile.txt"
+
+=====================================================
+
+docker run --rm -v ${PWD}:/files klutchell/rar a /files/myrar.rar /files/myfile.txt
+
+=====================================================
+
+docker run --rm -v ${PWD}:/files  -w /files klutchell/rar a myrar.rar myfile.txt
+
+-w ==> working directory
+
+=====================================================
+PHP
+
+docker run -it --rm --name my-running-script php:7.2-cli /bin/bash
+
+php -m ==> list modules
+php -i ==> configuration
+
+# echo '<? echo "test text\n";' > index.php
+
+docker run -it --rm -v ${PWD}:/myfiles --name my-running-script php:7.2-cli /bin/bash
+
+docker run -it --rm -v ${PWD}:/myfiles  -w /myfiles --name my-running-script php:7.2-cli /bin/bash
+
+
+
+=====================================================
+
+docker run -d httpd   ==> nothing on the browser
+
+-d ==> detach mode
+
+docker exec -it container_id /bin/bash
+# culr localhost:80
+# not found
+# apt-get update
+# apt-get install curl
+
+docker logs container_id ==> dispaly logs
+docker logs container_id -f ==> display logs continiously
+docker inspect container_id  ==> dispaly container settings
+
+docketr run -d -p 8080:80 httpd
+
+docker run -d --rm -p 8080:80 -v ${PWD}:/var/www/html php:7.2-apachhe   ==> 
+
+
+=====================================================
+
+docker build -t myphpapp . ===> will create image name myphpapp 
+
+docker image ls
+
+
+
+=====================================================
+

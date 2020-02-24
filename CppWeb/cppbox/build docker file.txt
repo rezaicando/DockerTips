@@ -1,0 +1,49 @@
+//first create Dockerfile
+
+//Then build image
+//build docker image: cppbox is tag name
+docker build -t cppbox .
+
+
+//get into docker bash line:
+docker run -ti cppbox:latest bash
+
+find boost lib:
+find /usr -name libboost*.*
+
+//Adding a volume or a shared folder
+//share a folder between docker and host
+//edit on host and buid on container
+
+
+docker run -v c:\MyProjects\CppWeb:/usr/src/cppweb -ti cppbox:latest bash
+
+// open port create environment and run on port 8080 - create volume
+docker run -v c:\MyProjects\CppWeb:/usr/src/cppweb -p 8080:8080 -e PORT=8080  cppbox:latest  /usr/src/cppweb/hello_crow/build/hello_crow
+
+docker run -v               <host>:<container>     -p <host PORT>:<container PORT> -e PORT=8080 <image> <app to run>
+
+
+
+//Find All running docker containers
+cmd -> docker ps  => it shows the running dockers id, names and other information
+
+//log in to the running docker container
+after finding the docker id or name
+cmd-> docker exec -it <docker id or name>  bin/bash
+#top -> list all processes id
+#kill id
+
+//
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,6 @@
+mkdir buid
+cd buid
+cmake ..  -> it will create nake file
+make
+
+

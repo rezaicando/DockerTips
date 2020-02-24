@@ -1,0 +1,114 @@
+Deploy container to Heroku
+
+
+1.Containerize our app
+2.Log in to Heroku
+3.Create Heroku app
+4.Push the container to Heroku and release it
+5.Test it in Browser
+
+before first we need to persist our volume into docker image 
+in order to dockerize app first we should create an image out of a running container
+
+c:\> docker run -ti cppbox:latest bash
+
+open another cmd :
+
+c:\cppweb> docker ps -> it gives the docker id
+c:\cppweb> docker cp . container_id:/usr/src/cppweb
+c:\cppweb> docker commit container_id hello_crow:latest
+
+
+go back to project directory cppweb\hello_crow
+
+create a docker file
+
+FROM hello_crow
+WORKDIR /usr/src/cppweb/hello_crow/build   -> use the build directory 
+CMD ["./hello_crow"] -> and in that directory launch the app
+
+
+back to terminal :
+
+
+c:\cppweb\hello_crow> heroku login 
+user and pass
+
+c:\cppweb\hello_crow> heroku container:login
+
+c:\cppweb\hello_crow>heroku create 
+it gives the app name - appname and url and git
+
+c:\cppweb\hello_crow>docker build -t hello_crow . 
+
+c:\cppweb\hello_crow> heroku container:push web -a appname
+it will takes time to upload 
+
+c:\cppweb\hello_crow> heroku container:release web -a appname
+
+c:\cppweb\hello_crow> heroku open -a appname -> it will open browser to see the app result
+
+
+========================================
+Docker Hub : for using other images and sharing the images
+
+
+1.login to docker hub
+2.Tag the image
+3.push the image
+4.verify the image
+
+
+c:\cppweb\hello_crow> docker login --username=myusername
+
+c:\cppweb\hello_crow> docker images -> to see what we have
+
+c:\cppweb\hello_crow> docker tag id  myusername/hello_crow:latest
+
+c:\cppweb\hello_crow>docker push  myusername/hello_crow
+it will take time to upload
+
+then back to browser and login to docker hub and you can see the images that pushed
+
+
+==========================================
+
+
+after changes to main.cpp file : we need to update the image
+
+C:\MyProjects\CppWeb> docker run -v C:\MyProjects\CppWeb\:/usr/src/cppweb -ti hello_crow:latest bash
+
+at the command : type make
+
+open another cmd :
+
+docker run -v c:\MyProjects\CppWeb:/usr/src/cppweb -p 8080:8080 -e PORT=8080  hello_crow:latest  /usr/src/cppweb/hello_crow/build/hello_crow
+
+open webbrowser  : localhost:8080 ===> not found  ( in the code ../public)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

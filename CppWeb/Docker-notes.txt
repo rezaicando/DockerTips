@@ -1,0 +1,35 @@
+
+First we download an image then we create container from that image
+
+
+Docker ps -a
+
+docker run -d -p 80:80 microsoft/iis   ==> run docker on specific port as a Daemon or service 
+
+Docker management commands :
+
+docker version  
+docker info
+
+ctrl P Q ==> exit from runnig container
+
+docker ps -a 
+
+docker attach [name of the container ]
+
+docker container stop [name of container]
+
+docker container rm [name of container]
+
+docker exec [name of container] ipconfig  ==> send command to specific container 
+
+docker image ls
+
+docker image rm microsoft/dotnet-samples:dotnetapp-nanoserver  ==> remove the image, if there is container built out of this image then you can't delete it unless force it to detele it
+docker image rm -f microsoft/dotnet-samples:dotnetapp-nanoserver ==> force to delete it
+
+docker logs [container name]
+
+docker container inspect [container name] 
+
+
