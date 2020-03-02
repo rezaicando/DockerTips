@@ -51,18 +51,123 @@ docker logs container_id ==> dispaly logs
 docker logs container_id -f ==> display logs continiously
 docker inspect container_id  ==> dispaly container settings
 
-docketr run -d -p 8080:80 httpd
+docketr run -d -p 8080:80 httpd  ==> run in detached mode
 
 docker run -d --rm -p 8080:80 -v ${PWD}:/var/www/html php:7.2-apachhe   ==> 
 
 
-=====================================================
+=============================Dockerfile=======================
+FROM php:7.2-cli
 
+RUN mkdir /myproject
+COPY index.php /myproject
+WORKDIR  /myproject
+
+CMD php index.php
+
+=====================================================
 docker build -t myphpapp . ===> will create image name myphpapp 
 
 docker image ls
 
 
+============================Dockerfile========================= to access through web
 
-=====================================================
+FROM php:7.2-cli
+
+EXPOSE 8000
+RUN mkdir /myproject
+COPY index.php /myproject
+WORKDIR /myproject
+CMD ["php","-S","0.0.0.0:8000"]
+=================================================================
+
+docker build -t myphpapp:web .
+
+docker run -p 8080:8000 myphpapp:web
+
+====================Dockerfile for apache php=========No need to use expose=====================================
+
+
+FROM php:7.2-apache
+COPY index.php /var/www/html/
+
+===================================================
+
+docker build -t myphpapp:apache .
+
+docker run --name my-phpapp-apache -p 8080:80 myphpapp:apache
+
+===============Dockerfile alpine curl===================================
+FROM alpine
+RUN apk update && apk add curl 
+ENTRYPOINT [ "curl" ]
+========================================================================
+
+docker build -t curl .
+
+docker run curl www.google.com
+
+docker system prune ==> delete all containers
+
+==========Want to upload to Docker Hub=========================================
+docker tag curl rezadocker1/curl:latest
+
+==========docker-compose.yml===================================================
+version: "3"
+
+services:
+  phpapp:
+    ports:
+      - "8080:80"
+    build:
+      context: ./
+      dockerfile: Dockerfile
+
+=======================================Dockerfile==============================
+FROM php:7.2-apache
+COPY index.php /var/www/html
+===============================================================================
+docker-compose up --build 
+
+=docker-compose without docker file and mounting volume========================
+
+
+version: "3"
+
+services:
+  phpapp:
+    image: php:7.2-apache
+    ports:
+      - "8080:80"
+    volumes:
+      - "./:/var/www/html"
+   
+=======================================================================================
+
+docker-compose up
+===================================custom image build=========Docker file==============================
+FROM php:7.2-apache
+
+RUN apt-get -y update \
+&& apt-get install -y libicu-dev \
+&& docker-php-ext-configure intl \
+&& docker-php-ext-install intl
+
+=======================================================compose docker file yml==================================
+version: "3"
+
+services:
+  phpapp:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: phpapp:123
+    ports:
+      - "8080:80"
+    volumes: 
+      - "./:/var/www/html"
+    container_name: my-php-app
+
+=================================================================================
 

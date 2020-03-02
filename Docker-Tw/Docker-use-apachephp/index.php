@@ -1,0 +1,1 @@
+<? echo "Hello world for web apache\n\n";
