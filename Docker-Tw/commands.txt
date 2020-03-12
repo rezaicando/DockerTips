@@ -169,5 +169,54 @@ services:
       - "./:/var/www/html"
     container_name: my-php-app
 
-=================================================================================
+===========================multiple services======================================================
+
+docker-compose up --build -d 
+
+docker-compose logs -f
+
+docker-compose ps
+
+docker-compose down   ==> quit and delete container
+
+================yml file=================
+version: "3"
+
+services:
+  phpapp:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: phpapp:123
+    ports:
+      - "8080:80"
+    volumes: 
+      - "./:/var/www/html"
+    container_name: my-php-app
+  db:
+    image: mysql:5.7
+    restart: always
+    environment: 
+      MYSQL_ROOT_PASSWORD: my!!!root!!!pw
+    container_name: myphpapp-db
+==================Dockerfile=====================
+
+FROM php:7.2-apache
+
+RUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli
+
+===========================================
+
+
+
+
+
+
+
+
+
+
+
+
+
 
