@@ -30,6 +30,6 @@ docker image rm -f microsoft/dotnet-samples:dotnetapp-nanoserver ==> force to de
 
 docker logs [container name]
 
-docker container inspect [container name] 
+docker container inspect [container name]
 
 
