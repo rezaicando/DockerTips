@@ -11,7 +11,7 @@ Docker management commands :
 docker version  .
 docker info
 
-ctrl P Q ==> exit from runnig container
+ctrl P Q ==> exit from runnig container.
 
 docker ps -a 
 
