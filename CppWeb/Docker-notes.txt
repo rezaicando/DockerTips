@@ -8,7 +8,7 @@ docker run -d -p 80:80 microsoft/iis   ==> run docker on specific port as a Daem
 
 Docker management commands :
 
-docker version  
+docker version  .
 docker info
 
 ctrl P Q ==> exit from runnig container
